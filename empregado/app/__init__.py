@@ -1,18 +1,13 @@
-from flask import Flask, signals, jsonify
+from flask import Flask
 from empregado.database import close_db
 
-# from shortener.short_url import shorturl_blueprint
-# from shortener.redirect import redirect_blueprint
-from empregado.routes import routes_blueprint
+from empregado.routes.empregado_routes import empregado_routes_blueprint
+from empregado.routes.empregado_endereco_routes import empregado_end_routes_blueprint
 from empregado.database import close_db
-# from shortener.config import get_logger
 
 def create_app():
 
     app = Flask(__name__)
-    # app.register_blueprint(shorturl_blueprint)
-    # app.register_blueprint(redirect_blueprint)
-    app.register_blueprint(routes_blueprint)
-    # Swagger(app, template=template, config=swagger_config)
-    # signals.request_finished.connect(close_db, sender=app)
+    app.register_blueprint(empregado_routes_blueprint)
+    app.register_blueprint(empregado_end_routes_blueprint)
     return app

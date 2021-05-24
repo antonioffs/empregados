@@ -5,13 +5,13 @@ import json
 
 from empregado.exceptions import Exceptions, EmpregadoNotFound, AllFieldsMustBeFilled
 
-routes_blueprint = Blueprint('routes_blueprint', __name__)
+empregado_routes_blueprint = Blueprint('empregado_routes_blueprint', __name__)
 
-@routes_blueprint.errorhandler(Exceptions)
+@empregado_routes_blueprint.errorhandler(Exceptions)
 def error_handler(error):
     return jsonify({"message": error.message}), error.code
 
-@routes_blueprint.route('/empregados', methods=["GET"])
+@empregado_routes_blueprint.route('/empregados', methods=["GET"])
 def seleciona_empregados():
     limit = request.headers.get('limit', 1000)
     offset = request.headers.get('offset', 0)
@@ -20,7 +20,7 @@ def seleciona_empregados():
     return response(200, "empregados", empregados_json)
 
 
-@routes_blueprint.route('/empregado/<id>', methods=["GET"])
+@empregado_routes_blueprint.route('/empregado/<id>', methods=["GET"])
 def seleciona_empregado(id):
     empregado = get_empregado_by_id(id)
     if empregado is None:
@@ -29,7 +29,7 @@ def seleciona_empregado(id):
         empregado_json = empregado.to_json()
     return response(200, "empregado", empregado_json)
 
-@routes_blueprint.route('/empregado', methods=["POST"])
+@empregado_routes_blueprint.route('/empregado', methods=["POST"])
 def insere_empregado():
     body = request.get_json()
     try:
@@ -39,14 +39,14 @@ def insere_empregado():
     except:
         raise AllFieldsMustBeFilled
 
-@routes_blueprint.route('/empregado/<id>', methods=["PUT"])
+@empregado_routes_blueprint.route('/empregado/<id>', methods=["PUT"])
 def atualiza_empregado(id):
     body = request.get_json()
     empregado_obj = put_empregado(id, body)
     empregado_json = empregado_obj.to_json()
     return response(200, "empregado", empregado_json)
 
-@routes_blueprint.route('/empregado/<id>', methods=["DELETE"])
+@empregado_routes_blueprint.route('/empregado/<id>', methods=["DELETE"])
 def excluir_empregado(id):
     empregado_obj = delete_empregado(id)
     empregado_json = empregado_obj.to_json()

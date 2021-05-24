@@ -17,4 +17,8 @@ class EmpregadoNotFound(Exceptions):
         self.code = 404
         super(EmpregadoNotFound, self).__init__(self.message, self.code)
 
-
+class EmpregadoEnderecoNotFound(Exceptions):
+    def __init__(self, message='Endereço do empregado não localizado'):
+        self.message = message
+        self.code = 404
+        super(EmpregadoEnderecoNotFound, self).__init__(self.message, self.code)
