@@ -35,7 +35,7 @@ def insere_empregado():
     try:
         empregado_obj = post_empregado(nome=body["nome"], sexo=body["sexo"], data_criacao=body["data_criacao"], idade=body["idade"], salario=body["salario"])
         empregado_json = empregado_obj.to_json()
-        return response(200, "empregado", empregado_json)
+        return response(201, "empregado", empregado_json)
     except:
         raise AllFieldsMustBeFilled
 
@@ -44,7 +44,7 @@ def atualiza_empregado(id):
     body = request.get_json()
     empregado_obj = put_empregado(id, body)
     empregado_json = empregado_obj.to_json()
-    return response(200, "empregado", empregado_json)
+    return response(202, "empregado", empregado_json, e,)
 
 @empregado_routes_blueprint.route('/empregado/<id>', methods=["DELETE"])
 def excluir_empregado(id):

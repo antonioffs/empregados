@@ -41,7 +41,7 @@ def insere_empregado():
                                                numero=body["numero"],
                                                cep=body["cep"],)
         empregado_end_json = empregado_end_obj.to_json()
-        return response(200, "empregados-endereço", empregado_end_json)
+        return response(201, "empregados-endereço", empregado_end_json)
     except:
         raise AllFieldsMustBeFilled
 
@@ -50,7 +50,7 @@ def atualiza_empregado(id):
     body = request.get_json()
     empregado_end_obj = put_empregado_end(id, body)
     empregado_end_json = empregado_end_obj.to_json()
-    return response(200, "empregados-endereço", empregado_end_json)
+    return response(202, "empregados-endereço", empregado_end_json)
 
 @empregado_end_routes_blueprint.route('/empregado-end/<id>', methods=["DELETE"])
 def excluir_empregado(id):
@@ -80,17 +80,17 @@ def put_empregado_end(id, body):
     if(not empregado_end_obj):
         raise EmpregadoEnderecoNotFound
     if("logradouro" in body):
-       empregado_end_obj.nome = body['logradouro']
+       empregado_end_obj.logradouro = body['logradouro']
     if("bairro" in body):
-       empregado_end_obj.sexo = body['bairro']
+       empregado_end_obj.bairro = body['bairro']
     if("cidade" in body):
-       empregado_end_obj.data_criacao = body['cidade']
+       empregado_end_obj.cidade = body['cidade']
     if("estado" in body):
-       empregado_end_obj.idade = body['estado']
+       empregado_end_obj.estado = body['estado']
     if("numero" in body):
-       empregado_end_obj.salario = body['numero']
+       empregado_end_obj.numero = body['numero']
     if("cep" in body):
-        empregado_end_obj.salario = body['cep']
+        empregado_end_obj.cep = body['cep']
     db_session.add(empregado_end_obj)
     db_session.commit()
     return empregado_end_obj
